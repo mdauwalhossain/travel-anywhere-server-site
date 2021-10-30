@@ -24,10 +24,11 @@ async function run (){
 
         //  Get products API
         app.get('/products', async(req, res) =>{
-            const cursor =await productCollection.find({}).toArray();
-            // const products = await cursor.toArray();
-            // console.log(products);
-            res.send(products);
+             const cursor = productCollection.find({});
+            //  const cursor = await productCollection.find({}).toArray();
+            const product = await cursor.toArray();
+            console.log(product);
+            res.json(product);
 
         })
     }
