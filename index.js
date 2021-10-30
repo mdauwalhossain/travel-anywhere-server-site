@@ -1,6 +1,8 @@
 const { MongoClient } = require('mongodb');
 const express = require('express');
 require('dotenv').config();
+const ObjectId = require('mongodb').ObjectId;
+
 const app = express();
 const cors = require('cors');
 
@@ -28,9 +30,29 @@ async function run (){
             //  const cursor = await productCollection.find({}).toArray();
             const product = await cursor.toArray();
             console.log(product);
-            res.json(product);
+            res.send(product);
 
+        });
+
+        // POST API
+        app.post('/products', async(req, res) =>{
+            const newUser = req.body;
+            const result = await productCollection.insertOne(newUser);
+            console.log('hit the post', req.body);
+            console.log('added user', result);
+            res.send(result)
+        });
+
+        // Delete API
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            // const query = { _id: ObjectId(id) };
+            // const result = await productCollection.deleteOne(query);
+            // console.log('Deleted id', result);
+            // res.json(id)
         })
+        
     }
     finally{
         // await client.close();
