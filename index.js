@@ -43,6 +43,16 @@ async function run (){
             res.send(result)
         });
 
+        // Update API
+        app.get('/products/:id', async(req,res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const user = await productCollection.findOne(query);
+            console.log('load user id', id);
+            res.send(user);
+        })
+
+
         // Delete API
         app.delete('/products/:id', async (req, res) => {
             const id = req.params.id;
